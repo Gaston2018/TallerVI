@@ -11,7 +11,7 @@ func main() {
 		io.WriteString(w, "Holllaaa!!!")
 	})
 	http.HandleFunc("/", handler)
-	http.ListenAndServe("http://ec2-18-219-147-32.us-east-2.compute.amazonaws.com/", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
