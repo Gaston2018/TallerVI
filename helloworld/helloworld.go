@@ -11,7 +11,7 @@ func main() {
 		io.WriteString(w, "Holllaaa!!!")
 	})
 	http.HandleFunc("/", handler)
-	http.ListenAndServe("18.188.181.98", nil)
+	http.ListenAndServe(":80", nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
