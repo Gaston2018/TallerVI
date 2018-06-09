@@ -1,4 +1,4 @@
-package helloworld
+package main
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func hello() {
+func main() {
 	http.HandleFunc("/holamundo", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "Holllaaa!!!")
 	})
