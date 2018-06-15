@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func main() {
+func basemain() {
 	fmt.Println("Go MySQL")
 
 	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/tallervi")
