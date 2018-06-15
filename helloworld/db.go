@@ -10,7 +10,7 @@ import (
 func main() {
 	fmt.Println("Go MySQL")
 
-	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/testdb")
+	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/tallervi")
 
 	if err != nil {
 		panic(err.Error())
@@ -18,7 +18,7 @@ func main() {
 
 	defer db.Close()
 
-	insert, err := db.Query("INSERT INTO profesionales VALUES ('Ivana', 'Valdez', '20892', 'veterinaria')")
+	insert, err := db.Query("INSERT INTO profesionales VALUES ('Gaston', 'Rivainera', '20893', 'veterinario')")
 
 	if err != nil {
 		panic(err.Error())
