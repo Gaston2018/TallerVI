@@ -18,6 +18,14 @@ func main() {
 
 	defer db.Close()
 
-	fmt.Println("Successfully Connected to MySQL database")
+	insert, err := db.Query("INSERT INTO profesionales VALUES ('Ivana', 'Valdez', '20892', 'veterinaria')")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer insert.Close()
+
+	fmt.Println("Successfully inserted into profesionales table")
 
 }
