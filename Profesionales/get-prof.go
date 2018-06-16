@@ -4,8 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"encoding/json"
-
-	_ "github.com/go-sql-driver/mysql"
+	_ "https://github.com/go-sql-driver/mysql"
 )
 
 func main2() {
