@@ -6,7 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func main2() {
+func main() {
 	fmt.Println("Go MySQL")
 
 	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/tallervi")
@@ -17,7 +17,7 @@ func main2() {
 
 	defer db.Close()
 
-	insert, err := db.Query("INSERT INTO profesionales VALUES ('Morgan', 'Rivainera', '20894', 'paciente')")
+	insert, err := db.Query("INSERT INTO profesionales VALUES ('Ezequiel', 'Nanton', '20898', 'paciente')")
 
 	if err != nil {
 		panic(err.Error())
