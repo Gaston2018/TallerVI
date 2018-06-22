@@ -1,12 +1,17 @@
 package main
 
 import (
+	"net/http"
 	"database/sql"
 	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type Profesioles struct
+{
+	nombre string 
+}
 func main() {
 	fmt.Println("Go MySQL")
 
@@ -18,6 +23,8 @@ func main() {
 
 	defer db.Close()
 
+	router.HandleFunc("/Profesionales", GetProfesionales).Methods("GET")
+
 	//insert, err := db.Query("INSERT INTO profesionales VALUES ('Ezequiel', 'Nanton', '20898', 'paciente')")
 
 	//if err != nil {
@@ -25,6 +32,11 @@ func main() {
 	//}
 
 	//defer insert.Close()
+
+	func GetProfesionales(w http.ResponseWriter, req *http.Request)
+	{
+
+	}
 
 	fmt.Println("Successfully inserted into profesionales table")
 
