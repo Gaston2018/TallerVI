@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -17,13 +18,13 @@ func main() {
 
 	defer db.Close()
 
-	insert, err := db.Query("INSERT INTO profesionales VALUES ('Ezequiel', 'Nanton', '20898', 'paciente')")
+	//insert, err := db.Query("INSERT INTO profesionales VALUES ('Ezequiel', 'Nanton', '20898', 'paciente')")
 
-	if err != nil {
-		panic(err.Error())
-	}
+	//if err != nil {
+	//	panic(err.Error())
+	//}
 
-	defer insert.Close()
+	//defer insert.Close()
 
 	fmt.Println("Successfully inserted into profesionales table")
 
