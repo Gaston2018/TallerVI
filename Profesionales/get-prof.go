@@ -11,7 +11,7 @@ import (
 )
 
 type Profesional struct {
-	Matricula    string `db:"matricula" json:"matricula"`
+	Matricula    int    `db:"matricula" json:"matricula"`
 	Nombre       string `db:"nombre" json:"nombre"`
 	Apellido     string `db:"apellido" json:"apellido"`
 	Especialidad string `db:"especialidad" json:"especialidad"`
@@ -103,7 +103,6 @@ func postProfesionales(c *gin.Context) {
 				c.JSON(201, content)
 			} else {
 				checkErr(err, "Insert failed")
-				fmt.Println(err)
 			}
 		}
 
