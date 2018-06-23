@@ -11,10 +11,11 @@ import (
 )
 
 type Profesional struct {
-	Matricula    int    `db:"matricula" json:"matricula"`
+	Matricula    string `db:"matricula" json:"matricula"`
 	Nombre       string `db:"nombre" json:"nombre"`
 	Apellido     string `db:"apellido" json:"apellido"`
 	Especialidad string `db:"especialidad" json:"especialidad"`
+	Direccion    string `db:"direccion" json:"direccion"`
 }
 
 var dbmap = initDb()
@@ -88,7 +89,7 @@ func postProfesionales(c *gin.Context) {
 
 	if matricula.Nombre != "" && matricula.Apellido != "" {
 
-		if insert, _ := dbmap.Exec(`INSERT INTO profesionales (nombre, apellido, matricula, especialidad) VALUES (?, ?, ?, ?)`, matricula.Nombre, matricula.Apellido, matricula.Matricula, matricula.Especialidad); insert != nil {
+		if insert, _ := dbmap.Exec(`INSERT INTO profesionales (nombre, apellido, matricula, especialidad, direccion) VALUES (?, ?, ?, ?, ?)`, matricula.Nombre, matricula.Apellido, matricula.Matricula, matricula.Especialidad, matricula.Direccion); insert != nil {
 			Matricula, err := insert.LastInsertId()
 			_ = Matricula
 			if err == nil {
@@ -97,6 +98,7 @@ func postProfesionales(c *gin.Context) {
 					Nombre:       matricula.Nombre,
 					Apellido:     matricula.Apellido,
 					Especialidad: matricula.Especialidad,
+					Direccion:    matricula.Direccion,
 				}
 				c.JSON(201, content)
 			} else {
