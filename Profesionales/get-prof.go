@@ -109,3 +109,8 @@ func postProfesionales(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "Fields are empty"})
 	}
 }
+
+func OptionsUser(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "DELETE,POST, PUT")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	c.Next()
