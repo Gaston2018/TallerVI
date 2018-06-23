@@ -49,6 +49,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/profesionales", getProfesionales)
+	router.POST("/postProfesionales", postProfesionales)
 
 	router.Run()
 
@@ -77,4 +78,34 @@ func getProfesionales(c *gin.Context) {
 		c.JSON(404, gin.H{"error": "no user(s) into the table"})
 	}
 
+}
+
+func postProfesionales(c *gin.Context) {
+	var matricula Profesional
+	c.Bind(&matricula)
+
+	log.Println(matricula)
+
+	if matricula.Nombre != "" && matricula.Apellido != "" {
+
+		if insert, _ := dbmap.Exec(`INSERT INTO profesionales (nombre, apellido, matricula, especialidad) VALUES (?, ?, ?, ?)`, matricula.Nombre, matricula.Apellido, matricula.Matricula, matricula.Especialidad); insert != nil {
+			Matricula, err := insert.LastInsertId()
+			_ = Matricula
+			if err == nil {
+				content := &Profesional{
+					Matricula:    matricula.Matricula,
+					Nombre:       matricula.Nombre,
+					Apellido:     matricula.Apellido,
+					Especialidad: matricula.Especialidad,
+				}
+				c.JSON(201, content)
+			} else {
+				checkErr(err, "Insert failed")
+				fmt.Println(err)
+			}
+		}
+
+	} else {
+		c.JSON(400, gin.H{"error": "Fields are empty"})
+	}
 }
