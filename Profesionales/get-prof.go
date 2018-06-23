@@ -1,43 +1,66 @@
 package main
 
 import (
-	"net/http"
 	"database/sql"
-	"fmt"
+	"log"
 
+	"github.com/gin-gonic/gin"
+	"github.com/go-gorp/gorp"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Profesioles struct
-{
-	nombre string 
+type Profesional struct {
+	Matricula int    `db:"Matricula" json:"Matricula"`
+	Nombre    string `db:"Nombre" json:"Nombre"`
+	Apellido  string `db:"Apellido" json:"Apellido"`
 }
-func main() {
-	fmt.Println("Go MySQL")
 
+var dbmap = initDb()
+
+func initDb() *gorp.DbMap {
 	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/tallervi")
+	checkErr(err, "sql.Open failed")
+	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
+	dbmap.AddTableWithName(Profesional{}, "profesionales").SetKeys(true, "Matricula")
+	err = dbmap.CreateTablesIfNotExists()
+	checkErr(err, "Create tables failed")
 
+	return dbmap
+}
+
+func checkErr(err error, msg string) {
 	if err != nil {
-		panic(err.Error())
+		log.Fatalln(msg, err)
 	}
+}
 
-	defer db.Close()
-
-	router.HandleFunc("/Profesionales", GetProfesionales).Methods("GET")
-
-	//insert, err := db.Query("INSERT INTO profesionales VALUES ('Ezequiel', 'Nanton', '20898', 'paciente')")
-
-	//if err != nil {
-	//	panic(err.Error())
-	//}
-
-	//defer insert.Close()
-
-	func GetProfesionales(w http.ResponseWriter, req *http.Request)
-	{
-
+func Cors() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Add("Access-Control-Allow-Origin", "*")
+		c.Next()
 	}
+}
 
-	fmt.Println("Successfully inserted into profesionales table")
+func main() {
+
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.Default()
+
+	router.GET("/profesionales", getProfesionales)
+
+	router.Run()
+
+}
+
+func getProfesionales(c *gin.Context) {
+
+	var profesionales []Profesional
+	_, err := dbmap.Select(&profesionales, "SELECT * FROM profesionales")
+
+	if err == nil {
+		c.JSON(200, profesionales)
+	} else {
+		c.JSON(404, gin.H{"error": "no user(s) into the table"})
+	}
 
 }
