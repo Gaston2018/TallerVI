@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -10,9 +11,10 @@ import (
 )
 
 type Profesional struct {
-	Matricula int    `db:"Matricula" json:"Matricula"`
-	Nombre    string `db:"Nombre" json:"Nombre"`
-	Apellido  string `db:"Apellido" json:"Apellido"`
+	Matricula    int    `db:"matricula" json:"matricula"`
+	Nombre       string `db:"nombre" json:"nombre"`
+	Apellido     string `db:"apellido" json:"apellido"`
+	Especialidad string `db:"especialidad" json:"especialidad"`
 }
 
 var dbmap = initDb()
@@ -21,7 +23,7 @@ func initDb() *gorp.DbMap {
 	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/tallervi")
 	checkErr(err, "sql.Open failed")
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
-	dbmap.AddTableWithName(Profesional{}, "profesionales").SetKeys(true, "Matricula")
+	dbmap.AddTableWithName(Profesional{}, "profesionales").SetKeys(true, "matricula")
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err, "Create tables failed")
 
@@ -54,12 +56,24 @@ func main() {
 
 func getProfesionales(c *gin.Context) {
 
+	especialidad := c.Query("especialidad") // shortcut for c.Request.URL.Query().Get("lastname")
+	query := "SELECT * FROM profesionales where 1=1 "
+	fmt.Println(especialidad)
+	if especialidad != "" {
+		query += "and especialidad = '" + especialidad + "'"
+	}
+	apellido := c.Query("apellido")
+	if apellido != "" {
+		query += "and apellido = '" + apellido + "'"
+	}
 	var profesionales []Profesional
-	_, err := dbmap.Select(&profesionales, "SELECT * FROM profesionales")
+	fmt.Println(query)
+	_, err := dbmap.Select(&profesionales, query)
 
 	if err == nil {
 		c.JSON(200, profesionales)
 	} else {
+		fmt.Println(err)
 		c.JSON(404, gin.H{"error": "no user(s) into the table"})
 	}
 
