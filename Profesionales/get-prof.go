@@ -51,6 +51,7 @@ func main() {
 
 	router.GET("/profesionales", getProfesionales)
 	router.POST("/postProfesionales", postProfesionales)
+	router.DELETE("/delProfesionales", delProfesionales)
 
 	router.Run()
 
@@ -102,6 +103,7 @@ func postProfesionales(c *gin.Context) {
 				}
 				c.JSON(201, content)
 			} else {
+				fmt.Println(err)
 				checkErr(err, "Insert failed")
 			}
 		}
@@ -109,6 +111,28 @@ func postProfesionales(c *gin.Context) {
 	} else {
 		c.JSON(400, gin.H{"error": "Fields are empty"})
 	}
+}
+
+func delProfesionales(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var user User
+	err := dbmap.SelectOne(&user, "SELECT * FROM user WHERE id=?", id)
+
+	if err == nil {
+		_, err = dbmap.Delete(&user)
+
+		if err == nil {
+			c.JSON(200, gin.H{"id #" + id: "deleted"})
+		} else {
+			checkErr(err, "Delete failed")
+		}
+
+	} else {
+		c.JSON(404, gin.H{"error": "user not found"})
+	}
+
+	// curl -i -X DELETE http://localhost:8080/api/v1/users/1
 }
 
 func OptionsUser(c *gin.Context) {
