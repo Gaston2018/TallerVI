@@ -114,16 +114,16 @@ func postProfesionales(c *gin.Context) {
 }
 
 func delProfesionales(c *gin.Context) {
-	id := c.Params.ByName("id")
+	id := c.Params.ByName("matricula")
 
 	var user User
-	err := dbmap.SelectOne(&user, "SELECT * FROM user WHERE id=?", id)
+	err := dbmap.SelectOne(&user, "SELECT * FROM profesionales WHERE id=?", id)
 
 	if err == nil {
-		_, err = dbmap.Delete(&user)
+		_, err = dbmap.Delete(&matricula)
 
 		if err == nil {
-			c.JSON(200, gin.H{"id #" + id: "deleted"})
+			c.JSON(200, gin.H{"matricula #" + id: "deleted"})
 		} else {
 			checkErr(err, "Delete failed")
 		}
