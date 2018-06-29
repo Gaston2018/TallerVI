@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-gorp/gorp"
@@ -52,6 +53,7 @@ func main() {
 	router.GET("/profesionales", getProfesionales)
 	router.POST("/postProfesionales", postProfesionales)
 	router.DELETE("/delProfesionales", delProfesionales)
+	router.PUT("/putProfesionales", putProfesionales)
 
 	router.Run()
 
@@ -116,8 +118,8 @@ func postProfesionales(c *gin.Context) {
 func delProfesionales(c *gin.Context) {
 	id := c.Params.ByName("matricula")
 
-	var user User
-	err := dbmap.SelectOne(&user, "SELECT * FROM profesionales WHERE id=?", id)
+	var matricula Profesional
+	err := dbmap.SelectOne(&matricula, "SELECT * FROM profesionales WHERE matricula=?", id)
 
 	if err == nil {
 		_, err = dbmap.Delete(&matricula)
@@ -133,6 +135,45 @@ func delProfesionales(c *gin.Context) {
 	}
 
 	// curl -i -X DELETE http://localhost:8080/api/v1/users/1
+}
+
+func putProfesionales(c *gin.Context) {
+	id := c.Params.ByName("matricula")
+	var matricula Profesional
+	err := dbmap.SelectOne(&matricula, "SELECT * FROM profesionales WHERE matricula=?", matricula)
+
+	if err == nil {
+		var json Profesional
+		c.Bind(&json)
+
+		matricula, _ := strconv.ParseInt(id, 0, 64)
+
+		user := Profesional{
+			Matricula:    json.Matricula,
+			Nombre:       json.Nombre,
+			Apellido:     json.Apellido,
+			Especialidad: json.Especialidad,
+			Direccion:    json.Direccion,
+		}
+
+		if user.Nombre != "" && user.Apellido != "" {
+			_, err = dbmap.Update(&matricula)
+
+			if err == nil {
+				c.JSON(200, user)
+			} else {
+				checkErr(err, "Updated failed")
+			}
+
+		} else {
+			c.JSON(400, gin.H{"error": "fields are empty"})
+		}
+
+	} else {
+		c.JSON(404, gin.H{"error": "user not found"})
+	}
+
+	// curl -i -X PUT -H "Content-Type: application/json" -d "{ \"firstname\": \"Thea\", \"lastname\": \"Merlyn\" }" http://localhost:8080/api/v1/users/1
 }
 
 func OptionsUser(c *gin.Context) {
