@@ -93,6 +93,7 @@ func postProfesionales(c *gin.Context) {
 	if matricula.Nombre != "" && matricula.Apellido != "" {
 
 		if insert, _ := dbmap.Exec(`INSERT INTO profesionales (nombre, apellido, matricula, especialidad, direccion) VALUES (?, ?, ?, ?, ?)`, matricula.Nombre, matricula.Apellido, matricula.Matricula, matricula.Especialidad, matricula.Direccion); insert != nil {
+			fmt.Println(insert)
 			Matricula, err := insert.LastInsertId()
 			_ = Matricula
 			if err == nil {
