@@ -12,7 +12,7 @@ import (
 )
 
 type Profesional struct {
-	Matricula    int    `db:"matricula" json:"matricula"`
+	Matricula    int64  `db:"matricula" json:"matricula"`
 	Nombre       string `db:"nombre" json:"nombre"`
 	Apellido     string `db:"apellido" json:"apellido"`
 	Especialidad string `db:"especialidad" json:"especialidad"`
@@ -51,11 +51,12 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/profesionales", getProfesionales)
-	router.POST("/postProfesionales", postProfesionales)
-	router.DELETE("/delProfesionales", delProfesionales)
-	router.PUT("/putProfesionales", putProfesionales)
+	router.POST("/profesionales", postProfesionales)
+	router.DELETE("/profesionales", delProfesionales)
+	router.PUT("/profesionales", putProfesionales)
 
 	router.Run()
+	fmt.Println("Levanto")
 
 }
 
@@ -85,34 +86,31 @@ func getProfesionales(c *gin.Context) {
 }
 
 func postProfesionales(c *gin.Context) {
-	var matricula Profesional
-	c.Bind(&matricula)
+	var profesional Profesional
+	c.BindJSON(&profesional)
+	log.Print("matricula: ")
+	log.Println(profesional)
+	if profesional.Nombre != "" && profesional.Apellido != "" {
 
-	log.Println(matricula)
-
-	if matricula.Nombre != "" && matricula.Apellido != "" {
-
-		if insert, _ := dbmap.Exec(`INSERT INTO profesionales (nombre, apellido, matricula, especialidad, direccion) VALUES (?, ?, ?, ?, ?)`, matricula.Nombre, matricula.Apellido, matricula.Matricula, matricula.Especialidad, matricula.Direccion); insert != nil {
-			fmt.Println(insert)
-			Matricula, err := insert.LastInsertId()
-			_ = Matricula
-			if err == nil {
-				content := &Profesional{
-					Matricula:    matricula.Matricula,
-					Nombre:       matricula.Nombre,
-					Apellido:     matricula.Apellido,
-					Especialidad: matricula.Especialidad,
-					Direccion:    matricula.Direccion,
-				}
-				c.JSON(201, content)
-			} else {
-				fmt.Println(err)
-				checkErr(err, "Insert failed")
+		insert, sqlErr := dbmap.Exec(`INSERT INTO profesionales (nombre, apellido, especialidad, direccion) VALUES (?, ?, ?, ?)`, profesional.Nombre, profesional.Apellido, profesional.Especialidad, profesional.Direccion)
+		fmt.Println("INSERT")
+		fmt.Println(insert)
+		fmt.Println(sqlErr)
+		var matricula int64
+		matricula, err := insert.LastInsertId()
+		if err == nil {
+			content := &Profesional{
+				Nombre:       profesional.Nombre,
+				Apellido:     profesional.Apellido,
+				Especialidad: profesional.Especialidad,
+				Direccion:    profesional.Direccion,
 			}
+			content.Matricula = matricula
+			c.JSON(201, content)
+		} else {
+			fmt.Println(err)
+			checkErr(err, "Insert failed")
 		}
-
-	} else {
-		c.JSON(400, gin.H{"error": "Fields are empty"})
 	}
 }
 
