@@ -73,9 +73,11 @@ func getProfesionales(c *gin.Context) {
 	if apellido != "" {
 		query += "and apellido = '" + apellido + "'"
 	}
+	nombre := c.Query("nombre")
 	if nombre != "" {
 		query += "and nombre = '" + nombre + "'"
 	}
+	domicilio := c.Query("domicilio")
 	if domicilio != "" {
 		query += "and domicilio = '" + domicilio + "'"
 	}
