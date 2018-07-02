@@ -51,10 +51,10 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/profesionales", getProfesionales)
-	router.GET("/profesionales/:matricula", getProfesionales)
+	//router.GET("/profesionales/:matricula", getProfesionales)
 	router.POST("/profesionales", postProfesionales)
-	router.DELETE("/profesionales", delProfesionales)
-	router.PUT("/profesionales", putProfesionales)
+	router.DELETE("/profesionales/:matricula", delProfesionales)
+	router.PUT("/profesionales/:matricula", putProfesionales)
 
 	router.Run()
 	fmt.Println("Levanto")
@@ -72,6 +72,12 @@ func getProfesionales(c *gin.Context) {
 	apellido := c.Query("apellido")
 	if apellido != "" {
 		query += "and apellido = '" + apellido + "'"
+	}
+	if nombre != "" {
+		query += "and nombre = '" + nombre + "'"
+	}
+	if domicilio != "" {
+		query += "and domicilio = '" + domicilio + "'"
 	}
 	var profesionales []Profesional
 	fmt.Println(query)
@@ -118,11 +124,11 @@ func postProfesionales(c *gin.Context) {
 func delProfesionales(c *gin.Context) {
 	id := c.Params.ByName("matricula")
 
-	var matricula Profesional
-	err := dbmap.SelectOne(&matricula, "SELECT * FROM profesionales WHERE matricula=?", id)
+	var profesional Profesional
+	err := dbmap.SelectOne(&profesional, "SELECT * FROM profesionales WHERE matricula=?", id)
 
 	if err == nil {
-		_, err = dbmap.Delete(&matricula)
+		_, err = dbmap.Delete(&profesional)
 
 		if err == nil {
 			c.JSON(200, gin.H{"matricula #" + id: "deleted"})
@@ -139,8 +145,8 @@ func delProfesionales(c *gin.Context) {
 
 func putProfesionales(c *gin.Context) {
 	id := c.Params.ByName("matricula")
-	var matricula Profesional
-	err := dbmap.SelectOne(&matricula, "SELECT * FROM profesionales WHERE matricula=?", matricula)
+	var profesional Profesional
+	err := dbmap.SelectOne(&profesional, "SELECT * FROM profesionales WHERE matricula=?", id)
 
 	if err == nil {
 		var json Profesional
@@ -149,7 +155,7 @@ func putProfesionales(c *gin.Context) {
 		matricula, _ := strconv.ParseInt(id, 0, 64)
 
 		user := Profesional{
-			Matricula:    json.Matricula,
+			Matricula:    matricula,
 			Nombre:       json.Nombre,
 			Apellido:     json.Apellido,
 			Especialidad: json.Especialidad,
@@ -170,6 +176,7 @@ func putProfesionales(c *gin.Context) {
 		}
 
 	} else {
+		fmt.Println(err)
 		c.JSON(404, gin.H{"error": "user not found"})
 	}
 
