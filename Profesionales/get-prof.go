@@ -51,6 +51,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/profesionales", getProfesionales)
+	router.GET("/profesionales/:matricula", getProfesionales)
 	router.POST("/profesionales", postProfesionales)
 	router.DELETE("/profesionales", delProfesionales)
 	router.PUT("/profesionales", putProfesionales)
