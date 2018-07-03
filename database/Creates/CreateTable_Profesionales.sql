@@ -1,8 +1,7 @@
-CREATE TABLE profesionales(
-	nombre varchar(60) not null,
-    apellido varchar(30) not null,
-    matricula smallint,
-    especialidad varchar(50) not null,
-    
-    primary key (matricula)
-)
+CREATE TABLE `tallervi`.`profesionales` (
+  `matricula` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(30) NOT NULL,
+  `apellido` VARCHAR(30) NOT NULL,
+  `especialidad` VARCHAR(30) NOT NULL,
+  `direccion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`matricula`));
