@@ -77,7 +77,6 @@ Procesos
 - Alta/baja/modificacion de animales
 - Alta/baja/modificacion de personas
 - Alta/baja/modificacion de historial
-- Alta/baja/modificacion de medicamentos
 - Alta/baja/modificacion de roles
 - Alta/baja/modificacion de permisos
 
