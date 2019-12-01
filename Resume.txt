@@ -67,7 +67,8 @@ pages
 
 - Login
 - Index
-- Hitorial Médico
+- Hitoria Clinica
+- Registrar usuario
 - ABM
 
 Procesos

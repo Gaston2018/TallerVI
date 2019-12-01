@@ -1,0 +1,1 @@
+alter table mascotas add constraint mascotas_pk primary key (mascotas);
