@@ -1,1 +1,2 @@
-go run backend/main.go
+cd backend/app
+go run .

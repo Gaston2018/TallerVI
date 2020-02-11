@@ -7,12 +7,13 @@ import (
 )
 
 func main() {
-	r := paths()
-	r.Run(":3000")
-}
+	//	r := registerRoutes()
+	//	r.LoadHTMLGlob("c:/programacion go/tallervi/templates/*.html")
+	//}
 
-func paths() *gin.Engine {
+	//func registerRoutes() *gin.Engine {
 	r := gin.Default()
+	r.Run(":3000")
 	r.LoadHTMLGlob("templates/*.html")
 	//rutas de acceso
 	r.GET("/", func(c *gin.Context) {
@@ -28,6 +29,5 @@ func paths() *gin.Engine {
 	})
 	r.Static("/public", "./public")
 
-	return r
-
+	//return r
 }
