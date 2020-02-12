@@ -1,0 +1,91 @@
+HTML5
+CSS3
+JavaScript
+
+Login html
+login javascript
+login css3
+
+Index html
+Index javascript
+Index css3
+
+Layout html
+Layout JavaScript
+Layout css3
+
+ficha medica
+
+	mascota
+	dueño
+	raza
+	vacunas
+	descripción historial
+	
+Funcionalidad.
+
+Login
+
+- admin
+- cliente
+
+ABM's
+
+Usuarios
+- Dueño
+- Veterinario
+- Admin
+- Recepcionista
+
+Mascotas
+Medicación
+Historial médico
+
+
+Roles
+- admin
+- veterinario
+- consulta
+
+Permisos
+- Ver turnos
+- Modificar turnos
+- Eliminar turnos
+- Ver usuarios
+- Modificar usuarios
+- Eliminar usuarios
+- Ver Veterinarios
+- Modificar Veterinarios
+- Eliminar Veterinarios
+- Ver Animales
+- Modificar Animales
+- Eliminar Animales
+
+Turnos
+
+pages
+
+- Login
+- Index
+- Hitoria Clinica
+- Registrar usuario
+- ABM
+
+Procesos
+
+- Alta/baja/modificacion de turnos
+- Alta/baja/modificacion de usuarios
+- Alta/baja/modificacion de animales
+- Alta/baja/modificacion de personas
+- Alta/baja/modificacion de historial
+- Alta/baja/modificacion de roles
+- Alta/baja/modificacion de permisos
+
+
+conformación de una URL
+
+protocolo/servidor/aplicación/controlador/acción/parámetros
+
+Cors ¿Que son los cors?
+
+
