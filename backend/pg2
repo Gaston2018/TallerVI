@@ -1,7 +1,0 @@
-create table roles(
-id_rol serial,
-descripcion varchar(30),
-primary key (id_rol)
-)
-INSERT INTO ROLES (DESCRIPCION) VALUES ('ADMINISTRADOR')
-INSERT INTO ROLES (DESCRIPCION) VALUES ('OPERADOR')
