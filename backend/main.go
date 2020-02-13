@@ -13,10 +13,11 @@ import (
 
 type Turno struct {
 	ID          int    `json:"id"`
-	Horario     string `json:"horario"`
+	Fecha     string `json:"fecha"`
+	Hora     string `json:"hora"`
 	Veterinario string `json:"veterinario"`
-	Mascota     string `json:"mascota"`
 	Dueno       string `json:"dueno"`
+	Mascota     string `json:"mascota"`
 }
 
 var agenda []Turno
@@ -44,9 +45,7 @@ func main() {
 
 	ruta.HandleFunc("/", index).Methods("Get")
 	ruta.HandleFunc("/turno/{id}", detalle).Methods("Get")
-	ruta.HandleFunc("/login", login).Methods("Get")
 	ruta.HandleFunc("/login", login).Methods("Post")
-	ruta.HandleFunc("/singup", singup).Methods("Get")
 	ruta.HandleFunc("/singup", singup).Methods("Post")
 	ruta.HandleFunc("/turnos", turnos).Methods("Get")
 	ruta.HandleFunc("/turnos", nuevoturno).Methods("Post")
@@ -74,7 +73,17 @@ func singup(w http.ResponseWriter, r *http.Request) {
 }
 
 func turnos(w http.ResponseWriter, r *http.Request) {
-
+var turno Turno
+agenda=[]Turno{}
+rows, err:=db.Query("select * from turnos")
+logFatal(err)
+defer rows.Close
+for rows.Next(){
+	err:=rows.Scan(&turno.ID, &turno.Fecha,&turno.Hora,&turno.Veterinario,&turno.Dueno,&turno.Mascota)
+	logFatal(err)
+	agenda=append(turno, Turno)
+}
+json.NewEncoder(w).Encode(agenda)
 }
 
 func nuevoturno(w http.ResponseWriter, r *http.Request) {
