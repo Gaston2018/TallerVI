@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -12,12 +13,12 @@ import (
 )
 
 type Turno struct {
-	ID          int    `json:"id"`
-	Fecha     string `json:"fecha"`
-	Hora     string `json:"hora"`
-	Veterinario string `json:"veterinario"`
-	Dueno       string `json:"dueno"`
-	Mascota     string `json:"mascota"`
+	ID          int    `json:"id_turno"`
+	Fecha       string `json:"fecha"`
+	Hora        string `json:"hora"`
+	Veterinario int    `json:"id_usuario"`
+	Dueno       int    `json:"id_cliente"`
+	Mascota     string `json:"id_mascota"`
 }
 
 var agenda []Turno
@@ -61,7 +62,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func detalle(w http.ResponseWriter, r *http.Request) {
+	var a Turno
+	parametros := mux.Vars(r)
 
+	rows := db.QueryRow("select * from turnos where id_turno=$1", parametros["id"])
+	err := rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
+	logFatal(err)
+	json.NewEncoder(w).Encode(a)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
@@ -73,17 +80,20 @@ func singup(w http.ResponseWriter, r *http.Request) {
 }
 
 func turnos(w http.ResponseWriter, r *http.Request) {
-var turno Turno
-agenda=[]Turno{}
-rows, err:=db.Query("select * from turnos")
-logFatal(err)
-defer rows.Close
-for rows.Next(){
-	err:=rows.Scan(&turno.ID, &turno.Fecha,&turno.Hora,&turno.Veterinario,&turno.Dueno,&turno.Mascota)
+	var a Turno
+	agenda = []Turno{}
+
+	rows, err := db.Query("select * from turnos")
 	logFatal(err)
-	agenda=append(turno, Turno)
-}
-json.NewEncoder(w).Encode(agenda)
+	defer rows.Close()
+
+	for rows.Next() {
+		rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
+		logFatal(err)
+
+		agenda = append(agenda, a)
+	}
+	json.NewEncoder(w).Encode(agenda)
 }
 
 func nuevoturno(w http.ResponseWriter, r *http.Request) {
