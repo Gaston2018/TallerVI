@@ -108,6 +108,13 @@ func nuevoturno(w http.ResponseWriter, r *http.Request) {
 }
 
 func modturnos(w http.ResponseWriter, r *http.Request) {
+	var a Turno
+	json.NewDecoder(r.Body).Decode(&a)
+	resultado, err := db.Exec("update turnos set fecha=$1, hora=$2, id_usuario=$3,id_cliente=$4,id_mascota=$5 where id_turno=$6 RETURNING id_turno", &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota, &a.ID)
+
+	rowsUpdate, err := resultado.RowsAffected()
+	logFatal(err)
+	json.NewEncoder(w).Encode(rowsUpdate)
 }
 
 func borrarturno(w http.ResponseWriter, r *http.Request) {
