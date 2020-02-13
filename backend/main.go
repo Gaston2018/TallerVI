@@ -118,5 +118,10 @@ func modturnos(w http.ResponseWriter, r *http.Request) {
 }
 
 func borrarturno(w http.ResponseWriter, r *http.Request) {
-
+	parametro := mux.Vars(r)
+	resultado, err := db.Exec("delete from turnos where id_turno=$1", parametro["id"])
+	logFatal(err)
+	rowsDelete, err := resultado.RowsAffected()
+	logFatal(err)
+	json.NewEncoder(w).Encode(rowsDelete)
 }
