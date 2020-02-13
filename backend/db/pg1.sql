@@ -25,7 +25,7 @@ INSERT INTO usuarios(NOMBRE,APELLIDO,NOMBRE_USUARIO,password,ID_ROL)
 VALUES ('ADMINISTRADOR','DE APLICACION','ADMIN','ADMIN',1)
 VALUES ('OPERADOR','VETERINARIA','OPERADOR','OPERADOR',2)
 VALUES ('JUAN','GONZALEZ','JGONZALEZ','1234',3)
-VALUES ('RICARDO','SANCHEZ','RSANCHEZ','C137',3)
+VALUES ('RICARDO','SANCHEZ','RSANCHEZ','C137',5)
 
 create table clientes (
 id_cliente serial,
@@ -38,18 +38,22 @@ primary key (id_cliente),
 foreign key (id_rol) referenceS roles(id_rol)
 )
 
+INSERT INTO CLIENTES(NOMBRE, APELLIDO, DIRECCION, TELEFONO, ID_ROL)
+VALUES ('RICARDO','SANCHEZ','HUMAHUACA 3585','C137',5)
+
 create table mascotas (
 id_mascota serial,
 nombre varchar(50) NOT NULL,
-apellido varchar(50) not null,
-nombre_usuario varchar(50) UNIQUE not null,
-password varchar(50) not null,
+tipo_animal varchar(50) not null,
 id_rol smallint not null,
 id_cliente smallint not null,
 primary key (id_mascota),
 foreign key (id_rol) referenceS roles(id_rol),
 foreign key (id_cliente) referenceS clientes(id_cliente)
 )
+
+INSERT INTO MASCOTAs(NOMBRE, tipo_animal, id_rol, id_cliente)
+VALUES ('Morty','humano',4,1)
 
 create table turnos (
 id_turno serial,
