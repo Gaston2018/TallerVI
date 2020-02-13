@@ -18,7 +18,7 @@ type Turno struct {
 	Hora        string `json:"hora"`
 	Veterinario int    `json:"id_usuario"`
 	Dueno       int    `json:"id_cliente"`
-	Mascota     string `json:"id_mascota"`
+	Mascota     int    `json:"id_mascota"`
 }
 
 var agenda []Turno
@@ -97,6 +97,14 @@ func turnos(w http.ResponseWriter, r *http.Request) {
 }
 
 func nuevoturno(w http.ResponseWriter, r *http.Request) {
+
+	var a Turno
+	var aID int
+	json.NewDecoder(r.Body).Decode(&a)
+	err := db.QueryRow("insert into turnos (fecha, hora, id_usuario,id_cliente,id_mascota)	values ($1,$2,$3,$4,$5)	RETURNING id_turno;", a.Fecha, a.Hora, a.Veterinario, a.Dueno, a.Mascota).Scan(&aID)
+	logFatal(err)
+
+	json.NewEncoder(w).Encode(aID)
 }
 
 func modturnos(w http.ResponseWriter, r *http.Request) {
