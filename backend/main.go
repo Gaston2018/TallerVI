@@ -3,12 +3,11 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/lib/pq"
 	"github.com/subosito/gotenv"
 )
 
@@ -34,14 +33,6 @@ func logFatal(err error) {
 	}
 }
 func main() {
-	pgUrl, err := pq.ParseURL(os.Getenv("ELEPHANTSQL_URL"))
-	logFatal(err)
-
-	//	log.Println(pgUrl)
-	db, err = sql.Open("postgres", pgUrl)
-	logFatal(err)
-	err = db.Ping()
-	logFatal(err)
 	ruta := mux.NewRouter()
 
 	ruta.HandleFunc("/", index).Methods("Get")
@@ -53,6 +44,7 @@ func main() {
 	ruta.HandleFunc("/turnos", modturnos).Methods("Put")
 	ruta.HandleFunc("/turno/{id}", borrarturno).Methods("Delete")
 
+	fmt.Println("usar el puerto 8000")
 	log.Fatal(http.ListenAndServe(":8000", ruta))
 }
 
