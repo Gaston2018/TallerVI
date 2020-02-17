@@ -1,4 +1,4 @@
-module veterinaria
+module TallerVI
 
 go 1.13
 
