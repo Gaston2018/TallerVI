@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -15,15 +16,18 @@ import (
 )
 
 var agenda []models.Turno
-var db = driver.ConnectDB()
+var db *sql.DB
 
 /*--------------------------------------------------------------------------*/
 //funciones
 
-func init() { gotenv.Load() }
+func init() {
+	gotenv.Load()
+}
 
 func main() {
 
+	db = driver.ConnectDB()
 	controller := controllers.Controller{}
 	ruta := mux.NewRouter()
 
