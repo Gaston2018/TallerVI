@@ -27,3 +27,33 @@ func (b RepositorioTurnos) VerTurnos(db *sql.DB, a models.Turno, agenda []models
 	return agenda, nil
 
 }
+
+func (b RepositorioTurnos) DetalleTurno(db *sql.DB, a models.Turno, id int) (models.Turno, error) {
+	rows := db.QueryRow("select * from turnos where id_turno=$1", id)
+	err := rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
+	return a, err
+}
+
+func (b RepositorioTurnos) NuevoTurno(db *sql.DB, a models.Turno) (int, error) {
+	err := db.QueryRow("insert into turnos (fecha, hora, id_usuario,id_cliente,id_mascota)	values ($1,$2,$3,$4,$5)	RETURNING id_turno;", a.Fecha, a.Hora, a.Veterinario, a.Dueno, a.Mascota).Scan(&a.ID)
+
+	if err != nil {
+		return 0, err
+	}
+	return a.ID, nil
+
+}
+
+func (b RepositorioTurnos) ModTurno(db *sql.DB, a models.Turno) (int64, error) {
+	resultado, err := db.Exec("update turnos set fecha=$1, hora=$2, id_usuario=$3,id_cliente=$4,id_mascota=$5 where id_turno=$6 RETURNING id_turno",
+		&a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota, &a.ID)
+
+	if err != nil {
+		return 0, err
+	}
+	rowsUpdated, err := resultado.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+	return rowsUpdated, nil
+}
