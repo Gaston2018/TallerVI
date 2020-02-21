@@ -1,5 +1,0 @@
-Para ejecutar el backend tendran que tener instalado Golang y Gin Gotonic
-Instalador de golang: https://golang.org/
-Instalar Gin: (desde cmd) "go get -u github.com/gin-gonic/gin"
-
-Despues ejecuten "run.bat", el acceso es por el puerto 3000
