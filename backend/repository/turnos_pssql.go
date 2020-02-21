@@ -45,15 +45,32 @@ func (b RepositorioTurnos) NuevoTurno(db *sql.DB, a models.Turno) (int, error) {
 }
 
 func (b RepositorioTurnos) ModTurno(db *sql.DB, a models.Turno) (int64, error) {
-	resultado, err := db.Exec("update turnos set fecha=$1, hora=$2, id_usuario=$3,id_cliente=$4,id_mascota=$5 where id_turno=$6 RETURNING id_turno",
-		&a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota, &a.ID)
+	result, err := db.Exec("update turnos set fecha=$1, hora=$2, id_usuario=$3,id_cliente=$4,id_mascota=$5 where id_turno=$6 RETURNING id_turno", &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota, &a.ID)
 
 	if err != nil {
 		return 0, err
 	}
-	rowsUpdated, err := resultado.RowsAffected()
+
+	rowsUpdated, err := result.RowsAffected()
+
 	if err != nil {
 		return 0, err
 	}
 	return rowsUpdated, nil
+}
+
+func (b RepositorioTurnos) BorTurno(db *sql.DB, id int) (int64, error) {
+
+	resultado, err := db.Exec("delete from turnos where id_turno=$1", id)
+
+	if err != nil {
+		return 0, err
+	}
+
+	rowsDelete, err := resultado.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return rowsDelete, nil
 }

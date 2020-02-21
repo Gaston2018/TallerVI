@@ -22,13 +22,13 @@ func logFatal(err error) {
 }
 
 var agenda []models.Turno
+var turnosrep = repository.RepositorioTurnos{}
 
 func (c Controller) Turnos(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var a models.Turno
 		var error models.Error
 		agenda = []models.Turno{}
-		turnosrep := repository.RepositorioTurnos{}
 		agenda, err := turnosrep.VerTurnos(db, a, agenda)
 		if err != nil {
 			error.Mensaje = "Server error"
@@ -48,7 +48,7 @@ func (c Controller) Detalle(db *sql.DB) http.HandlerFunc {
 
 		parametros := mux.Vars(r)
 		agenda = []models.Turno{}
-		turnosrep := repository.RepositorioTurnos{}
+		//turnosrep := repository.RepositorioTurnos{}
 		id, _ := strconv.Atoi(parametros["id"])
 		a, err := turnosrep.DetalleTurno(db, a, id)
 
@@ -83,7 +83,7 @@ func (c Controller) NuevoTurno(db *sql.DB) http.HandlerFunc {
 			utils.SendError(w, http.StatusBadRequest, error) //400
 			return
 		}
-		turnosrep := repository.RepositorioTurnos{}
+		//turnosrep := repository.RepositorioTurnos{}
 		aID, err := turnosrep.NuevoTurno(db, a)
 
 		if err != nil {
@@ -109,16 +109,40 @@ func (c Controller) ModTurno(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		turnosrep := repository.RepositorioTurnos{}
+		//turnosrep := repository.RepositorioTurnos{}
 		rowsUpdated, err := turnosrep.ModTurno(db, a)
 
 		if err != nil {
-			error.Mensaje = "Server error before query"
+			error.Mensaje = "Server error"
 			utils.SendError(w, http.StatusInternalServerError, error) //500
 			return
 		}
 
 		w.Header().Set("Content-Type", "application/json")
 		utils.SendSuccess(w, rowsUpdated)
+	}
+}
+
+func (c Controller) DelTurno(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var error models.Error
+		parametro := mux.Vars(r)
+		//turnosrep := repository.RepositorioTurnos{}
+		id, _ := strconv.Atoi(parametro["id"])
+		rowsDeleted, err := turnosrep.BorTurno(db, id)
+
+		if err != nil {
+			error.Mensaje = "Server error"
+			utils.SendError(w, http.StatusInternalServerError, error) //500
+			return
+		}
+		if rowsDeleted == 0 {
+			error.Mensaje = "Turno no encotrado"
+			utils.SendError(w, http.StatusInternalServerError, error) //404
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		utils.SendSuccess(w, rowsDeleted)
+
 	}
 }
