@@ -30,18 +30,18 @@ func main() {
 	ruta := mux.NewRouter()
 
 	ruta.HandleFunc("/", index).Methods("GET")
-	ruta.HandleFunc("/turnos", controller.Turnos(db)).Methods("Get")          //muestra todos los turnos
-	ruta.HandleFunc("/turno/{id}", controller.Detalle(db)).Methods("Get")     //muestra un turno en especifico
-	ruta.HandleFunc("/turnos", controller.NuevoTurno(db)).Methods("Post")     //crea un turno
-	ruta.HandleFunc("/turnos", controller.ModTurno(db)).Methods("Put")        //actualiza turno, envia id por json
-	ruta.HandleFunc("/turno/{id}", controller.DelTurno(db)).Methods("Delete") //borra turno
+	ruta.HandleFunc("/turnos", controller.Turnos(db)).Methods("Get")                  //muestra todos los turnos
+	ruta.HandleFunc("/turno/{id}", controller.Detalle(db)).Methods("Get")             //muestra un turno en especifico
+	ruta.HandleFunc("/turnos", controller.NuevoTurno(db)).Methods("Post")             //crea un turno
+	ruta.HandleFunc("/turnos", controller.ModTurno(db)).Methods("Put")                //actualiza turno, envia id por json
+	ruta.HandleFunc("/turno/{id}", controller.DelTurno(db)).Methods("Delete")         //borra turno
+	ruta.HandleFunc("/nuevocliente", controller.NuevoCliente(db)).Methods("Post")     // creacion de clientes
+	ruta.HandleFunc("/nuevamascota", controller.NuevaMascota(db)).Methods("Post")     //creacion de mascotas
+	ruta.HandleFunc("/nuevoveterinario", controller.NuevoUsuario(db)).Methods("Post") //creacion de usuarios
 	/*Rutas pendientes
 	  ruta.HandleFunc("/nuevoturno").Methods("Get") --> envia clientes y veterinarios
 	  ruta.HandleFunc("/nuevoturno/mascotas").Methods("Get") --> enviar mascotas en funcion del dueño
-	  ruta.HandleFunc("/nuevocliente").Methods.("Post")--> creacion de clientes
 	  ruta.HandleFunc("/nuevamascota").Methods("Get")-->enviar listado de clientes
-	  ruta.HandleFunc("/nuevamascota").Methods.("Post")-->creacion de mascotas
-	  ruta.HandleFunc("/nuevoveterinario").Methods.("Post")-->creacion de veterinarios
 	  Fin*/
 	fmt.Println("usar el puerto " + port)
 	log.Fatal(http.ListenAndServe(":"+port, ruta))

@@ -7,11 +7,12 @@ Endpoits con el metodo que espera
 "/turnos" ("Post") //crea un turno
 "/turnos" ("Put") //actualiza turno, envia id por json
 "/turno/{id}" ("Delete") //borra turno
+"/nuevocliente" ("Post") //creacion de clientes
+"/nuevamascota" ("Post") //creacion de mascotas
+"/nuevoveterinario" ("Post") //creacion de veterinarios
+
 /*Rutas pendientes
 "/nuevoturno" ("Get") --> envia clientes y veterinarios
 "/nuevoturno/mascotas" ("Get") --> enviar mascotas en funcion del dueño
-"/nuevocliente" ("Post")--> creacion de clientes
 "/nuevamascota" ("Get")-->enviar listado de clientes
-"/nuevamascota" ("Post")-->creacion de mascotas
-"/nuevoveterinario" ("Post")-->creacion de veterinarios
 Fin*/

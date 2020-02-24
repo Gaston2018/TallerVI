@@ -28,12 +28,6 @@ func (b RepositorioTurnos) VerTurnos(db *sql.DB, a models.Turno, agenda []models
 
 }
 
-func (b RepositorioTurnos) DetalleTurno(db *sql.DB, a models.Turno, id int) (models.Turno, error) {
-	rows := db.QueryRow("select * from turnos where id_turno=$1", id)
-	err := rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
-	return a, err
-}
-
 func (b RepositorioTurnos) NuevoTurno(db *sql.DB, a models.Turno) (int, error) {
 	err := db.QueryRow("insert into turnos (fecha, hora, id_usuario,id_cliente,id_mascota)	values ($1,$2,$3,$4,$5)	RETURNING id_turno;", a.Fecha, a.Hora, a.Veterinario, a.Dueno, a.Mascota).Scan(&a.ID)
 
@@ -42,6 +36,12 @@ func (b RepositorioTurnos) NuevoTurno(db *sql.DB, a models.Turno) (int, error) {
 	}
 	return a.ID, nil
 
+}
+
+func (b RepositorioTurnos) DetalleTurno(db *sql.DB, a models.Turno, id int) (models.Turno, error) {
+	rows := db.QueryRow("select * from turnos where id_turno=$1", id)
+	err := rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
+	return a, err
 }
 
 func (b RepositorioTurnos) ModTurno(db *sql.DB, a models.Turno) (int64, error) {
@@ -74,3 +74,74 @@ func (b RepositorioTurnos) BorTurno(db *sql.DB, id int) (int64, error) {
 
 	return rowsDelete, nil
 }
+
+//nuevas funciones
+
+//creacion de clientes
+func (b RepositorioTurnos) NuevoCliente(db *sql.DB, a models.NCliente) (int, error) {
+	err := db.QueryRow("insert into test_clientes (descripcion, telefono, direccion, documento) values ($1,$2,$3,$4)	RETURNING ID_Cliente", a.Descripcion, a.Telefono, a.Direccion, a.Documento).Scan(&a.IDCliente)
+
+	if err != nil {
+		return 0, err
+	}
+	return a.IDCliente, nil
+
+}
+
+//creacion de mascotas
+func (b RepositorioTurnos) NuevaMascota(db *sql.DB, a models.NMascota) (int, error) {
+	err := db.QueryRow("insert into test_mascotas (descripcion, tipo, id_cliente) values ($1,$2,$3)	RETURNING ID_Cliente", a.Descripcion, a.Tipo, a.IDCliente).Scan(&a.IDMascota)
+
+	if err != nil {
+		return 0, err
+	}
+	return a.IDMascota, nil
+
+}
+
+//Creacion de usuarios
+func (b RepositorioTurnos) NuevoUsuario(db *sql.DB, a models.NUsuario) (int, error) {
+	err := db.QueryRow("insert into test_usuarios (descripcion, telefono, direccion, documento) values ($1,$2,$3,$4) RETURNING ID_Usuario", a.Descripcion, a.Telefono, a.Direccion, a.Documento).Scan(&a.IDUsuario)
+
+	if err != nil {
+		return 0, err
+	}
+	return a.IDUsuario, nil
+
+}
+
+/*nuevo input de tunos en progreso
+
+func (b RepositorioTurnos) cargarturnoTurno(db *sql.DB, a models.NuevoTurno) (int, error) {
+	//var comodin models.RegTurno
+	var vet int
+	var cli int
+	var masc int
+
+	err := db.QueryRow("select id_usuario from usuarios where descripcion = '$1' RETURNING id_usuario", a.Veterinario).Scan(&vet)
+
+	if err != nil {
+		return 104, err
+	}
+
+	err = db.QueryRow("select id_cliente from clientes where descripcion = '$1' RETURNING id_cliente", a.Cliente).Scan(&cli)
+
+	if err != nil {
+		return 104, err
+	}
+
+	err = db.QueryRow("select id_mascota from mascotas where descripcion = '$1' RETURNING id_mascota", a.Mascota).Scan(&masc)
+
+	if err != nil {
+		return 104, err
+	}
+
+	err = db.QueryRow("insert into test_agenda (fecha_hora, id_usuario,id_cliente,id_mascota)	values ($1,$2,$3,$4,$5)	RETURNING id_turno", a.FechaHora, vet, cli, masc).Scan(&a.IDturno)
+
+	if err != nil {
+		return 104, err
+	}
+	return a.IDturno, nil
+
+}
+*/
