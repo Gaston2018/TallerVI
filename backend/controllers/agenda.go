@@ -14,6 +14,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func enableCors(w *http.ResponseWriter, r *http.Request) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
+//	enableCors(&w, r) hack: agregar linea para habilitar el cors
 type Controller struct{}
 
 func logFatal(err error) {
@@ -27,6 +34,7 @@ var turnosrep = repository.RepositorioTurnos{}
 
 func (c Controller) Turnos(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var a models.Turno
 		var error models.Error
 		agenda = []models.Turno{}
