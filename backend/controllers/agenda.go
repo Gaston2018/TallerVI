@@ -51,7 +51,7 @@ func (c Controller) Turnos(db *sql.DB) http.HandlerFunc {
 
 func (c Controller) Detalle(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
+		enableCors(&w, r)
 		var a models.Turno
 		var error models.Error
 
@@ -81,6 +81,7 @@ func (c Controller) Detalle(db *sql.DB) http.HandlerFunc {
 
 func (c Controller) ModTurno(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var a models.Turno
 		var error models.Error
 
@@ -108,6 +109,7 @@ func (c Controller) ModTurno(db *sql.DB) http.HandlerFunc {
 
 func (c Controller) DelTurno(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var error models.Error
 		parametro := mux.Vars(r)
 		//turnosrep := repository.RepositorioTurnos{}
@@ -135,6 +137,7 @@ func (c Controller) DelTurno(db *sql.DB) http.HandlerFunc {
 //Nuevo turno
 func (c Controller) NuevoTurno(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var a models.Turno
 		var aID int
 		var error models.Error
@@ -161,6 +164,7 @@ func (c Controller) NuevoTurno(db *sql.DB) http.HandlerFunc {
 
 func (c Controller) NuevoCliente(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var a models.NCliente
 		var CliID int
 		var error models.Error
@@ -189,6 +193,7 @@ func (c Controller) NuevoCliente(db *sql.DB) http.HandlerFunc {
 
 func (c Controller) NuevaMascota(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var m models.NMascota
 		var MasID int
 		var error models.Error
@@ -217,6 +222,7 @@ func (c Controller) NuevaMascota(db *sql.DB) http.HandlerFunc {
 
 func (c Controller) NuevoUsuario(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
 		var n models.NUsuario
 		var UserID int
 		var error models.Error
@@ -247,7 +253,7 @@ var clientes []models.NUsuario
 
 func (c Controller) ListadoClientes(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
+		enableCors(&w, r)
 		var a models.NUsuario
 		var error models.Error
 		clientes = []models.NUsuario{}
