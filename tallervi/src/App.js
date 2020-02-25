@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.css';
 
 
@@ -15,12 +15,15 @@ import CreateMascota from './components/CreateMascota'
 function App() {
   return (
     <Router>
-      <Navigation/>
-      <Route path="/" exact component={Index}/>
-      <Route path="/user" component={CreateUser}/>
-      <Route path="/turnos" component={Turnos}/>
-      <Route path="/cliente" component={CreateClient}/>
-      <Route path="/mascota" component={CreateMascota}/>
+      <Navigation />
+
+      <div className="container p-4">
+        <Route path="/" exact component={Index} />
+        <Route path="/user" component={CreateUser} />
+        <Route path="/turnos" component={Turnos} />
+        <Route path="/cliente" component={CreateClient} />
+        <Route path="/mascota" component={CreateMascota} />
+      </div>
     </Router>
   );
 }
