@@ -109,7 +109,23 @@ func (b RepositorioTurnos) NuevoUsuario(db *sql.DB, a models.NUsuario) (int, err
 	return a.IDUsuario, nil
 
 }
+/* en progreso
+//filtar mascotas segun dueño
+func (b RepositorioTurnos) MascotasClientes(db *sql.DB, dmasc models.NMascota, mascotas []models.NMascotas, cli string) (models.NMascota, error) {
+	rows, err := db.Query("select * from test_mascotas where id_cliente=(select id_cliente from test_clientes	where descripcion='$1')", cli)
 
+	//	if err != nil {
+	//		return 0, err
+		}
+
+	for rows.Next() {
+		err = rows.Scan(&dmasc.IDMascota, &dmasc.Descripcion, &dmasc.Tipo, &dmasc.IDCliente)
+		mascotas = append(dmasc, m)
+
+	}
+	return m, err
+}
+*/
 /*nuevo input de tunos en progreso
 
 func (b RepositorioTurnos) cargarturnoTurno(db *sql.DB, a models.NuevoTurno) (int, error) {
