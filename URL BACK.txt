@@ -11,6 +11,7 @@ Endpoits con el metodo que espera
 "/nuevamascota" ("Post") //creacion de mascotas
 "/nuevoveterinario" ("Post") //creacion de veterinarios
 "/nuevamascota" ("Get")//enviar listado de clientes
+"/mascotas"("Get")//ver mascotas
 
 /*Rutas pendientes
 "/nuevoturno" ("Get") --> envia clientes y veterinarios
