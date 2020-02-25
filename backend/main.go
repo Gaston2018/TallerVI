@@ -39,14 +39,14 @@ func main() {
 	//manejo de clientes
 	ruta.HandleFunc("/nuevocliente", controller.NuevoCliente(db)).Methods("Post") // creacion de clientes
 	//manejo de mascotas
-	ruta.HandleFunc("/nuevamascota", controller.NuevaMascota(db)).Methods("Post") //creacion de mascotas
+	ruta.HandleFunc("/nuevamascota", controller.ListadoClientes(db)).Methods("Get") //enviar listado de clientes
+	ruta.HandleFunc("/nuevamascota", controller.NuevaMascota(db)).Methods("Post")   //creacion de mascotas
 	//manejo de usuarios
 	ruta.HandleFunc("/nuevoveterinario", controller.NuevoUsuario(db)).Methods("Post") //creacion de usuarios
 	//funciones
 	//ruta.HandleFunc("/nuevoturno/mascotas/{cliente}", controller.MascotasClientes(db)).Methods("Get") //enviar mascotas en funcion del dueño
 	/*Rutas pendientes
 	  ruta.HandleFunc("/nuevoturno").Methods("Get") --> envia clientes y veterinarios
-	  ruta.HandleFunc("/nuevamascota").Methods("Get")-->enviar listado de clientes
 	  Fin*/
 	fmt.Println("usar el puerto " + port)
 	log.Fatal(http.ListenAndServe(":"+port, ruta))

@@ -234,6 +234,27 @@ func (c Controller) NuevoUsuario(db *sql.DB) http.HandlerFunc {
 	}
 
 }
+
+var clientes []models.NUsuario
+
+func (c Controller) ListadoClientes(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		var a models.NUsuario
+		var error models.Error
+		clientes = []models.NUsuario{}
+		clientes, err := turnosrep.ListadoClientes(db, a, clientes)
+		if err != nil {
+			error.Mensaje = "Server error"
+			utils.SendError(w, http.StatusInternalServerError, error)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		utils.SendSuccess(w, clientes)
+
+	}
+}
+
 /*
 func (c Controller) MascotasClientes(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
