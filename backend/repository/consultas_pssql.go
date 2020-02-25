@@ -131,6 +131,27 @@ func (b RepositorioTurnos) ListadoClientes(db *sql.DB, a models.NUsuario, client
 
 }
 
+//listado de Mascotas
+func (b RepositorioTurnos) Mascotas(db *sql.DB, a models.NMascota, mascotas []models.NMascota) ([]models.NMascota, error) {
+	rows, err := db.Query("select * from test_mascotas")
+
+	if err != nil {
+		return []models.NMascota{}, err
+	}
+
+	for rows.Next() {
+		err = rows.Scan(&a.IDMascota, &a.Descripcion, &a.Tipo, &a.IDCliente)
+
+		mascotas = append(mascotas, a)
+	}
+	if err != nil {
+		return []models.NMascota{}, err
+	}
+
+	return mascotas, nil
+
+}
+
 /* en progreso
 //filtar mascotas segun dueño
 func (b RepositorioTurnos) MascotasClientes(db *sql.DB, dmasc models.NMascota, mascotas []models.NMascotas, cli string) (models.NMascota, error) {

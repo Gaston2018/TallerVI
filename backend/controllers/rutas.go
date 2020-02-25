@@ -269,6 +269,25 @@ func (c Controller) ListadoClientes(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+var mascotas []models.NMascota
+
+func (c Controller) Mascotas(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
+		var a models.NMascota
+		var error models.Error
+		mascotas = []models.NMascota{}
+		mascotas, err := turnosrep.Mascotas(db, a, mascotas)
+		if err != nil {
+			error.Mensaje = "Server error"
+			utils.SendError(w, http.StatusInternalServerError, error)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		utils.SendSuccess(w, mascotas)
+	}
+}
+
 /*
 func (c Controller) MascotasClientes(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

@@ -39,6 +39,7 @@ func main() {
 	//manejo de clientes
 	ruta.HandleFunc("/nuevocliente", controller.NuevoCliente(db)).Methods("Post") // creacion de clientes
 	//manejo de mascotas
+	ruta.HandleFunc("/mascotas", controller.Mascotas(db)).Methods("Get")            //ver mascotas
 	ruta.HandleFunc("/nuevamascota", controller.ListadoClientes(db)).Methods("Get") //enviar listado de clientes
 	ruta.HandleFunc("/nuevamascota", controller.NuevaMascota(db)).Methods("Post")   //creacion de mascotas
 	//manejo de usuarios
