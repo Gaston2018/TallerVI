@@ -1,6 +1,5 @@
 package models
 
-
 type RegTurno struct { //comodin para registrar
 	IDturno     int    `json:"id_turno"`
 	FechaHora   string `json:"fecha_hora"`
@@ -30,6 +29,9 @@ type NUsuario struct {
 	Direccion   string `json:"direccion"`
 	Documento   string `json:"documento"`
 	IDUsuario   int    `json:"id_usuario"`
+}
+type Comod struct {
+	Dato string `json:"dato"`
 }
 
 //EN PROCESO

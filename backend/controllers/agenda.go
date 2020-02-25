@@ -234,3 +234,28 @@ func (c Controller) NuevoUsuario(db *sql.DB) http.HandlerFunc {
 	}
 
 }
+/*
+func (c Controller) MascotasClientes(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var dmasc models.NMascotas
+		var error models.Error
+
+		parametro := mux.Vars(r)
+		var cli string
+		cli = parametro
+		mascotas = []models.NMascotas{}
+		mascotas, err := turnosrep.MascotasClientes(db, dmasc, mascotas, cli)
+		if err == sql.ErrNoRows {
+			error.Mensaje = "Dueño no encontrado"
+			utils.SendError(w, http.StatusInternalServerError, error)
+			return
+		} else {
+			error.Mensaje = "Server error"
+			utils.SendError(w, http.StatusInternalServerError, error)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		utils.SendSuccess(w, dmasc)
+	}
+}
+*/
