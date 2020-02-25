@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import './App.css';
+
+
+import Index from './components/Index'
+import CreateUser from './components/CreateUser'
+import Turnos from './components/Turnos'
+import Navigation from './components/Navigation'
+import CreateClient from './components/CreateClients'
+import CreateMascota from './components/CreateMascota'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navigation/>
+      <Route path="/" exact component={Index}/>
+      <Route path="/user" component={CreateUser}/>
+      <Route path="/turnos" component={Turnos}/>
+      <Route path="/cliente" component={CreateClient}/>
+      <Route path="/mascota" component={CreateMascota}/>
+    </Router>
   );
 }
 
