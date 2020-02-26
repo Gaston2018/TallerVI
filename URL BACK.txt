@@ -13,7 +13,7 @@ Endpoits con el metodo que espera
 "/nuevamascota" ("Get")//enviar listado de clientes
 "/mascotas"("Get")//ver mascotas
 
-/*Rutas pendientes
+Rutas pendientes
 "/nuevoturno" ("Get") --> envia clientes y veterinarios
 "/nuevoturno/mascotas" ("Get") --> enviar mascotas en funcion del dueño
-Fin*/
+Fin
