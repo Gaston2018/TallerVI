@@ -2,18 +2,50 @@ url del proyecto en heroku
 http://fierce-harbor-58840.herokuapp.com/
 
 Endpoits con el metodo que espera
-"/turnos" ("Get") //muestra todos los turnos
-"/turno/{id}" ("Get") //muestra un turno en especifico
-"/turnos" ("Post") //crea un turno
-"/turnos" ("Put") //actualiza turno, envia id por json
-"/turno/{id}" ("Delete") //borra turno
-"/nuevocliente" ("Post") //creacion de clientes
-"/nuevamascota" ("Post") //creacion de mascotas
-"/nuevoveterinario" ("Post") //creacion de veterinarios
-"/nuevamascota" ("Get")//enviar listado de clientes
-"/mascotas"("Get")//ver mascotas
+---------------------------------------------------------
+Manejo de Turnos
+Muestra todos los turnos: "/turnos" ("Get")
+Muestra un turno en particular: "/turno/{id}" ("Get")
+Crea turno: "/turnos" ("Post")
+Modifica turno: "/turnos" ("Put")
+Elimina turno "/turno/{id}" ("Delete")
+Listado de clientes: "/turnos/clientes" ("Get")
+Listado de veterinarios: "/turnos/Usuarios" ("Get")
+--------------------------------------------------------
+Manejo de Mascotas
+Muestra todas las mascotas:"/mascotas" ("Get")
+Listado de clientes: "/nuevamascota" ("Get")
+Crea mascota: "/nuevamascota" ("Post")
+Muestra una mascota en particular: pendiente
+modifica una mascota: pendiente
+--------------------------------------------------------
+Manejo de Clientes
+Crea cliente: "/nuevocliente" ("Post")
+muesta todos los Clientes: pendiente
+muestra un cliente en particular: pendiente
+modifica un clientes: pendiente
+Elimina un cliente: pendiente
+--------------------------------------------------------
+Manejo de usuarios
+Crea usuarios: "/nuevoveterinario" ("Post")
+muesta todos los usuarios: pendiente
+muestra un usuario en particulas: pendiente
+modifica un usuario: pendiente
+elimina un usuario: pendiente
+
+
 
 Rutas pendientes
-"/nuevoturno" ("Get") --> envia clientes y veterinarios
+
 "/nuevoturno/mascotas" ("Get") --> enviar mascotas en funcion del dueño
 Fin
+
+
+
+//turnos/Mascotas
+
+//funciones
+ruta.HandleFunc("/nuevoturno/mascotas/{cliente}", controller.MascotasClientes(db)).Methods("Get") //enviar mascotas en funcion del dueño
+/*Rutas pendientes
+  ruta.HandleFunc("/nuevoturno").Methods("Get") --> envia clientes y veterinarios
+  Fin*/
