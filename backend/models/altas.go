@@ -1,11 +1,11 @@
 package models
 
-type RegTurno struct { //comodin para registrar
-	IDturno     int    `json:"id_turno"`
-	FechaHora   string `json:"fecha_hora"`
-	Veterinario int    `json:"Nombre_Veterinario"`
-	Cliente     int    `json:"nombre_cliente"`
-	Mascota     int    `json:"nombre_mascota"`
+type NUsuario struct {
+	Descripcion string `json:"nombre"`
+	Telefono    string `json:"telefono"`
+	Direccion   string `json:"direccion"`
+	Documento   string `json:"documento"`
+	IDUsuario   int    `json:"id_usuario"`
 }
 
 type NCliente struct { //Nuevo cliente
@@ -23,13 +23,14 @@ type NMascota struct { //nueva mascota
 	IDMascota   int    `json:"id_mascota"`
 }
 
-type NUsuario struct {
-	Descripcion string `json:"nombre"`
-	Telefono    string `json:"telefono"`
-	Direccion   string `json:"direccion"`
-	Documento   string `json:"documento"`
-	IDUsuario   int    `json:"id_usuario"`
+type RegTurno struct { //comodin para registrar
+	IDturno     int    `json:"id_turno"`
+	FechaHora   string `json:"fecha_hora"`
+	Veterinario string `json:"Nombre_Veterinario"`
+	Cliente     string `json:"nombre_cliente"`
+	Mascota     string `json:"nombre_mascota"`
 }
+
 type Comod struct {
 	Dato string `json:"dato"`
 }

@@ -133,7 +133,7 @@ func (c Controller) DelTurno(db *sql.DB) http.HandlerFunc {
 }
 
 //nuevas funciones
-
+//------------------------------------------------------------------------------------------------------------------------
 //Nuevo turno
 func (c Controller) NuevoTurno(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -162,6 +162,32 @@ func (c Controller) NuevoTurno(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+func (c Controller) RegTurno(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w, r)
+		var a models.RegTurno
+		var aID int
+		var error models.Error
+
+		json.NewDecoder(r.Body).Decode(&a)
+		if a.FechaHora == "" || a.Veterinario == "" || a.Cliente == "" || a.Mascota == "" {
+			error.Mensaje = "Error. Por favor complete todos los campos"
+			utils.SendError(w, http.StatusBadRequest, error)
+			return
+		}
+		aID, err := turnosrep.RegTurno(db, a)
+		if err != nil {
+			fmt.Println(err)
+			error.Mensaje = "Server error"
+			utils.SendError(w, http.StatusInternalServerError, error)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		utils.SendSuccess(w, aID)
+	}
+}
+
+//------------------------------------------------------------------------------------------------------------------------
 func (c Controller) NuevoCliente(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		enableCors(&w, r)

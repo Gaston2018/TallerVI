@@ -2,6 +2,27 @@ url del proyecto en heroku
 http://fierce-harbor-58840.herokuapp.com/
 
 Endpoits con el metodo que espera
+--------------------------------------------------------
+Manejo de usuarios
+Crea usuarios: "/nuevoveterinario" ("Post")
+muesta todos los usuarios: "/veterinarios" ("Get")
+muestra un usuario en particulas: pendiente "" ("")
+modifica un usuario: pendiente "" ("")
+elimina un usuario: pendiente "" ("")
+--------------------------------------------------------
+Manejo de Clientes
+Crea cliente: "/nuevocliente" ("Post")
+muesta todos los Clientes: pendiente "" ("")
+muestra un cliente en particular: pendiente "" ("")
+modifica un clientes: pendiente "" ("")
+Elimina un cliente: pendiente "" ("")
+--------------------------------------------------------
+Manejo de Mascotas
+Muestra todas las mascotas:"/mascotas" ("Get")
+Listado de clientes: "/nuevamascota/clientes" ("Get")
+Crea mascota: "/nuevamascota" ("Post")
+Muestra una mascota en particular: pendiente "" ("")
+modifica una mascota: pendiente "" ("")
 ---------------------------------------------------------
 Manejo de Turnos
 Muestra todos los turnos: "/turnos" ("Get")
@@ -11,27 +32,6 @@ Modifica turno: "/turnos" ("Put")
 Elimina turno "/turno/{id}" ("Delete")
 Listado de clientes: "/turnos/clientes" ("Get")
 Listado de veterinarios: "/turnos/Usuarios" ("Get")
---------------------------------------------------------
-Manejo de Mascotas
-Muestra todas las mascotas:"/mascotas" ("Get")
-Listado de clientes: "/nuevamascota" ("Get")
-Crea mascota: "/nuevamascota" ("Post")
-Muestra una mascota en particular: pendiente
-modifica una mascota: pendiente
---------------------------------------------------------
-Manejo de Clientes
-Crea cliente: "/nuevocliente" ("Post")
-muesta todos los Clientes: pendiente
-muestra un cliente en particular: pendiente
-modifica un clientes: pendiente
-Elimina un cliente: pendiente
---------------------------------------------------------
-Manejo de usuarios
-Crea usuarios: "/nuevoveterinario" ("Post")
-muesta todos los usuarios: pendiente
-muestra un usuario en particulas: pendiente
-modifica un usuario: pendiente
-elimina un usuario: pendiente
 
 
 

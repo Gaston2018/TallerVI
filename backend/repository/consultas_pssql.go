@@ -28,6 +28,7 @@ func (b RepositorioTurnos) VerTurnos(db *sql.DB, a models.Turno, agenda []models
 
 }
 
+//------------------------------------------------------------------------------------------------------------------------
 func (b RepositorioTurnos) NuevoTurno(db *sql.DB, a models.Turno) (int, error) {
 	err := db.QueryRow("insert into turnos (fecha, hora, id_usuario,id_cliente,id_mascota)	values ($1,$2,$3,$4,$5)	RETURNING id_turno;", a.Fecha, a.Hora, a.Veterinario, a.Dueno, a.Mascota).Scan(&a.ID)
 
@@ -37,7 +38,16 @@ func (b RepositorioTurnos) NuevoTurno(db *sql.DB, a models.Turno) (int, error) {
 	return a.ID, nil
 
 }
+func (b RepositorioTurnos) RegTurno(db *sql.DB, a models.RegTurno) (int, error) {
+	err := db.QueryRow("insert into test_turnos (fechahora, veterinario ,mascota,cliente)	values ($1,$2,$3,$4)	RETURNING id_turno;", a.FechaHora, a.Veterinario, a.Mascota, a.Cliente).Scan(&a.IDturno)
 
+	if err != nil {
+		return 0, err
+	}
+	return a.IDturno, nil
+}
+
+//------------------------------------------------------------------------------------------------------------------------
 func (b RepositorioTurnos) DetalleTurno(db *sql.DB, a models.Turno, id int) (models.Turno, error) {
 	rows := db.QueryRow("select * from turnos where id_turno=$1", id)
 	err := rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
@@ -169,21 +179,14 @@ func (b RepositorioTurnos) Usuarios(db *sql.DB, a models.NUsuario, usuarios []mo
 
 }
 
-/* en progreso
+/*
 //filtar mascotas segun dueño
-func (b RepositorioTurnos) MascotasClientes(db *sql.DB, dmasc models.NMascota, mascotas []models.NMascotas, cli string) (models.NMascota, error) {
-	rows, err := db.Query("select * from test_mascotas where id_cliente=(select id_cliente from test_clientes	where descripcion='$1')", cli)
-
-	//	if err != nil {
-	//		return 0, err
-		}
-
-	for rows.Next() {
-		err = rows.Scan(&dmasc.IDMascota, &dmasc.Descripcion, &dmasc.Tipo, &dmasc.IDCliente)
-		mascotas = append(dmasc, m)
-
+func (b RepositorioTurnos) MascotasClientes(db *sql.DB, dmasc models.NMascota, mascotas, cli string) (models.NMascota, error) {
+	rows:=db.QueryRow("",cli)
+	err:=rows.Scan(&)
+		err := rows.Scan(&a.ID, &a.Fecha, &a.Hora, &a.Veterinario, &a.Dueno, &a.Mascota)
+		return a, err
 	}
-	return m, err
 }
 */
 /*nuevo input de tunos en progreso
