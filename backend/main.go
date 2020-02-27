@@ -63,18 +63,21 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+port, ruta))
 }
 
+//funciones
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "bienvenidos")
 }
+
 func logFatal(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
 }
+
 func clima(w http.ResponseWriter, r *http.Request) {
 
 	var error models.Error
-	resp, err := http.Get("http://api.openweathermap.org/data/2.5/forecast?id=3433955&APPID=af4c25b26d16e7216792d5c73ffc6584")
+	resp, err := http.Get("http://api.openweathermap.org/data/2.5/weather?lat=-34.60&lon=-58.38&APPID=af4c25b26d16e7216792d5c73ffc6584")
 	if err != nil {
 		error.Mensaje = "Server error"
 		utils.SendError(w, http.StatusInternalServerError, error)
