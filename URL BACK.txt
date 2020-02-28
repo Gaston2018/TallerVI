@@ -27,20 +27,3 @@ Modifica turno: "/turnos" ("Put")
 Elimina turno "/turno/{id}" ("Delete")
 Listado de clientes: "/turnos/clientes" ("Get")
 Listado de veterinarios: "/turnos/Usuarios" ("Get")
-
-
-
-Rutas pendientes
-
-"/nuevoturno/mascotas" ("Get") --> enviar mascotas en funcion del dueño
-Fin
-
-
-
-//turnos/Mascotas
-
-//funciones
-ruta.HandleFunc("/nuevoturno/mascotas/{cliente}", controller.MascotasClientes(db)).Methods("Get") //enviar mascotas en funcion del dueño
-/*Rutas pendientes
-  ruta.HandleFunc("/nuevoturno").Methods("Get") --> envia clientes y veterinarios
-  Fin*/

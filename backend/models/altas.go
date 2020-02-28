@@ -30,18 +30,3 @@ type RegTurno struct { //comodin para registrar
 	Cliente     string `json:"nombre_cliente"`
 	Mascota     string `json:"nombre_mascota"`
 }
-
-type Comod struct {
-	Dato string `json:"dato"`
-}
-
-//EN PROCESO
-/*
-type NuevoTurno2 struct { //recepcion de turo
-	FechaHora   string `json:"fecha_hora"`
-	Veterinario string `json:"Nombre_Veterinario"`
-	Cliente     string `json:"nombre_cliente"`
-	Mascota     string `json:"nombre_mascota"`
-	IDturno     int    `json:"id_turno"`
-}
-*/
