@@ -37,28 +37,27 @@ func main() {
 	//manejo de usuarios
 	ruta.HandleFunc("/nuevoveterinario", controller.NuevoUsuario(db)).Methods("Post") //creacion de usuarios
 	ruta.HandleFunc("/veterinarios", controller.Usuarios(db)).Methods("Get")
+	ruta.HandleFunc("/veterinario/{id}", controller.ModUsuario(db)).Methods("Put")
 	//manejo de clientes
 	ruta.HandleFunc("/nuevocliente", controller.NuevoCliente(db)).Methods("Post")
 	ruta.HandleFunc("/clientes", controller.ListadoClientes(db)).Methods("Get")
+	ruta.HandleFunc("/cliente/{id}", controller.ModCliente(db)).Methods("Put")
 	//manejo de mascotas
-	ruta.HandleFunc("/mascotas", controller.Mascotas(db)).Methods("Get")                     //ver mascotas
-	ruta.HandleFunc("/nuevamascota/clientes", controller.ListadoClientes(db)).Methods("Get") //enviar listado de clientes
-	ruta.HandleFunc("/nuevamascota", controller.NuevaMascota(db)).Methods("Post")            //creacion de mascotas
+	ruta.HandleFunc("/mascotas", controller.Mascotas(db)).Methods("Get")          //ver mascotas
+	ruta.HandleFunc("/nuevamascota", controller.NuevaMascota(db)).Methods("Post") //creacion de mascotas
+	ruta.HandleFunc("/mascota/{id}", controller.ModMascota(db)).Methods("Put")
 	//manejo de Turnos
-	ruta.HandleFunc("/turnos", controller.Turnos(db)).Methods("Get")                   //muestra todos los turnos
-	ruta.HandleFunc("/turno/{id}", controller.Detalle(db)).Methods("Get")              //muestra un turno en especifico
-	ruta.HandleFunc("/turnos", controller.RegTurno(db)).Methods("Post")                //crea un turno
-	ruta.HandleFunc("/turnos", controller.ModTurno(db)).Methods("Put")                 //actualiza turno, envia id por json
-	ruta.HandleFunc("/turno/{id}", controller.DelTurno(db)).Methods("Delete")          //borra turno
-	ruta.HandleFunc("/turnos/clientes", controller.ListadoClientes(db)).Methods("Get") //enviar listado de clientes
-	ruta.HandleFunc("/turnos/Usuarios", controller.Usuarios(db)).Methods("Get")
-	//turnos/Mascotas
+	ruta.HandleFunc("/turnos", controller.VerTurnos(db)).Methods("Get")        //muestra todos los turnos
+	ruta.HandleFunc("/turnos", controller.RegTurno(db)).Methods("Post")        //crea un turno
+	ruta.HandleFunc("/turno/{id}", controller.DetalleTurno(db)).Methods("Get") //muestra un turno en especifico
+	ruta.HandleFunc("/turnos", controller.ModTurno(db)).Methods("Put")         //actualiza turno, envia id por json
+	ruta.HandleFunc("/turno/{id}", controller.DelTurno(db)).Methods("Delete")  //borra turno
+
 	//funciones
-	// creacion de clientes
-	//	ruta.HandleFunc("/nuevoturno/mascotas/{cliente}", controller.MascotasClientes(db)).Methods("Get") //enviar mascotas en funcion del dueño
-	/*Rutas pendientes
-	  ruta.HandleFunc("/nuevoturno").Methods("Get") --> envia clientes y veterinarios
-	  Fin*/
+	ruta.HandleFunc("/nuevamascota/clientes", controller.ListadoClientes(db)).Methods("Get") //enviar listado de clientes
+	ruta.HandleFunc("/turnos/clientes", controller.ListadoClientes(db)).Methods("Get")       //enviar listado de clientes
+	ruta.HandleFunc("/turnos/Usuarios", controller.Usuarios(db)).Methods("Get")
+
 	fmt.Println("usar el puerto " + port)
 	log.Fatal(http.ListenAndServe(":"+port, ruta))
 }

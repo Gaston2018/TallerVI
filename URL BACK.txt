@@ -6,23 +6,18 @@ Endpoits con el metodo que espera
 Manejo de usuarios
 Crea usuarios: "/nuevoveterinario" ("Post")
 muesta todos los usuarios: "/veterinarios" ("Get")
-muestra un usuario en particulas: pendiente "" ("")
-modifica un usuario: pendiente "" ("")
-elimina un usuario: pendiente "" ("")
+modifica un usuario: pendiente "/veterinario/{id}" ("Put")
 --------------------------------------------------------
 Manejo de Clientes
 Crea cliente: "/nuevocliente" ("Post")
-muesta todos los Clientes: pendiente "" ("")
-muestra un cliente en particular: pendiente "" ("")
-modifica un clientes: pendiente "" ("")
-Elimina un cliente: pendiente "" ("")
+muesta todos los Clientes:  "/clientes" ("Get")
+modifica un clientes: pendiente "/cliente/{id}" ("Put")
 --------------------------------------------------------
 Manejo de Mascotas
 Muestra todas las mascotas:"/mascotas" ("Get")
 Listado de clientes: "/nuevamascota/clientes" ("Get")
 Crea mascota: "/nuevamascota" ("Post")
-Muestra una mascota en particular: pendiente "" ("")
-modifica una mascota: pendiente "" ("")
+modifica una mascota: "/mascota/{id}" ("Put")
 ---------------------------------------------------------
 Manejo de Turnos
 Muestra todos los turnos: "/turnos" ("Get")
