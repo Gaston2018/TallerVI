@@ -1,0 +1,43 @@
+--nueva base de datos
+create table test_clientes (
+id_cliente serial,
+descripcion varchar(100) NOT NULL,
+telefono varchar(50),
+direccion varchar(50),
+documento varchar(50) unique not null,
+primary key (id_cliente)
+)
+
+create table test_mascotas(
+id_mascota serial,
+descripcion varchar(50) not null,
+tipo varchar(50) not null,
+id_cliente int not null,
+primary key(id_mascota),
+foreign key (id_cliente) references test_clientes(id_cliente)
+)
+
+create table test_usuarios (
+id_usuario serial,
+descripcion varchar(100) NOT NULL,
+telefono varchar(50),
+direccion varchar(50),
+documento varchar(50) unique not null,
+primary key (id_usuario)
+)
+
+create table test_turnos(
+id_turno serial
+fechahora timestamp
+veterinario varchar(100)
+mascota varchar(50)
+cliente varchar(100)
+primary key(id_turno)
+)
+
+--consultas
+select * from test_mascotas
+where id_cliente=(
+	select id_cliente from test_clientes
+	where descripcion=''
+	)
