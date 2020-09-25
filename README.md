@@ -1,2 +1,0 @@
-# TallerVI
-Aplicación de tallerVI
