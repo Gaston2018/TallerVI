@@ -21,7 +21,7 @@ func GetUsers(c *gin.Context) {
 }
 
 //CreateUser ... Create User
-//Test gitlab 2
+//Test gitlab 3
 func CreateUser(c *gin.Context) {
 	var user Models.User
 	c.BindJSON(&user)
